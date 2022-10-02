@@ -13,7 +13,6 @@ export default function Title() {
   }
 
   const ThisTitle = styled.div`
-    border: 2px white dotted;
     width: 90%;
     margin-inline: auto;
     height: 120px;

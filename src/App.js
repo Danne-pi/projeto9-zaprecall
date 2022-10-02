@@ -2,18 +2,31 @@ import styled, {createGlobalStyle} from "styled-components";
 import Answers from "./answers";
 import Questions from "./questions";
 import Title from "./title";
+import { useState } from "react";
+import questionsContent from "./assets/questionContent";
 
 
 
 export default function App() {
+  
+  function transformArray(){
+    for (let i = 0; i < questionsContent.length; i++) {
+      questionsContent[i].opened = false
+    }
+    return questionsContent
+  }
+
+  const [questlist, setQuestlistState] = useState(transformArray)
+
+
   return (
     <>
       <ThisApp>
         <GlobalStyle/>
         <Title/>
-        <Questions/>
+        <Questions questList={questlist} thisState={setQuestlistState}/>
       </ThisApp>
-      <Answers/>
+      <Answers questList={questionsContent.length}/>
     </>
   );
 }

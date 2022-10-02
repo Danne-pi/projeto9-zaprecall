@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 
 
-export default function Answers() {
+export default function Answers(props) {
     return (
       <ThisAnswers>
         <Buttons>
@@ -10,7 +10,7 @@ export default function Answers() {
             <button className="b2">Quase nao lembrei</button>
             <button className="b3">Zap!</button>
         </Buttons>
-        <h2>0/4 CONCLUIDOS</h2>
+        <h2>0/{props.questList} CONCLUIDOS</h2>
       </ThisAnswers>
     );
   }
