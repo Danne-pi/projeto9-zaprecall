@@ -4,14 +4,14 @@ import reveal from "./assets/reveal.svg"
 import zap from "./assets/zap.svg"
 import soso from "./assets/soso.svg"
 import lose from "./assets/lose.svg"
-import { useRef } from "react";
 
 
 function WriteListOfQuestions(props){
     const qlist = props.questList
     return qlist.map((item, idx)=>(
     <Question 
-    key={idx} 
+    key={idx}
+    id={idx === 0? 'firstQuest': ''} 
     height={qlist[idx].state}
     imgPosition={qlist[idx].state}
     iconClickable={idx === props.actQuest}

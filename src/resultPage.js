@@ -68,6 +68,7 @@ export default function ResultPage(props){
                 props.setIdx(0)
                 props.setShowResult(false)
                 props.setIdxToShow(0)
+                document.getElementById('firstQuest').scrollIntoView({ behavior: 'smooth' })
             }}
             >Tentar Novamente</RestartButton>
         </ThisPage>
