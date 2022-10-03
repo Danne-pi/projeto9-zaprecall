@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import ResultPage from "./resultPage";
 
 
 export default function Answers(props) {
@@ -8,6 +10,8 @@ export default function Answers(props) {
   const questlist = props.questList
   const thisState = props.thisState
   const setIdx = props.setActQuest
+  const [idxToShow, setIdxToShow] = useState(0)
+  const [showResult, setShowResult] = useState(false)
 
   function answerHandler(answerType){
     let newArr = [...answerList]
@@ -18,8 +22,15 @@ export default function Answers(props) {
     }
     setAnswer(newArr)
     addNewState(idx, questlist, thisState, (answerType+2))
-    const newIdx = idx + 1
-    setIdx(newIdx)
+    if(idx < (questlist.length-1)){
+      const newIdx = idx + 1
+      setIdx(newIdx)
+      setIdxToShow(newIdx)
+    }
+    else{
+      const newIdx = idxToShow + 1
+      setIdxToShow(newIdx)
+    }
   }
 
   function addNewState(index, actuaArr, thisState, newState){
@@ -38,12 +49,29 @@ export default function Answers(props) {
   
     return (
       <ThisAnswers>
-        <Buttons>
+        <Buttons
+        showThis={idxToShow < questlist.length}
+        >
             <button onClick={()=> answerHandler(1)} className={questlist[idx].state === 2 ? 'b1': 'b0'}>Nao lembrei</button>
             <button onClick={()=> answerHandler(2)} className={questlist[idx].state === 2 ? 'b2': 'b0'}>Quase nao lembrei</button>
             <button onClick={()=> answerHandler(3)} className={questlist[idx].state === 2 ? 'b3': 'b0'}>Zap!</button>
         </Buttons>
-        <h2>0/{props.questList.length} CONCLUIDOS</h2>
+        <h2>{idxToShow}/{questlist.length} CONCLUIDOS</h2>
+        <LastButton
+        showThis={idxToShow === questlist.length}
+        onClick={()=> setShowResult(true)}
+        >
+        Conferir resultado</LastButton>
+        {showResult ? 
+        <ResultPage 
+        setAnswer = {setAnswer}
+        answerList = {answerList}
+        thisState = {thisState}
+        setIdx = {setIdx}
+        setIdxToShow = {setIdxToShow}
+        setShowResult = {setShowResult}
+        /> 
+        : <></>}
       </ThisAnswers>
     );
   }
@@ -64,7 +92,7 @@ export default function Answers(props) {
     }
   `
   const Buttons = styled.div`
-    display: flex;
+    display: ${props => props.showThis ? 'flex' : 'none'};
     width: 60%;
     margin-inline: auto;
     justify-content: space-evenly;
@@ -86,3 +114,16 @@ export default function Answers(props) {
       background-color: #BCBCBD;
       }
   `
+  const LastButton = styled.button`
+    display: ${props=> props.showThis ? 'unset' : 'none'};
+    background-color: #33B950;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+  ` 

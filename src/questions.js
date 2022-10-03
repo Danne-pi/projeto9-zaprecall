@@ -4,6 +4,7 @@ import reveal from "./assets/reveal.svg"
 import zap from "./assets/zap.svg"
 import soso from "./assets/soso.svg"
 import lose from "./assets/lose.svg"
+import { useRef } from "react";
 
 
 function WriteListOfQuestions(props){
