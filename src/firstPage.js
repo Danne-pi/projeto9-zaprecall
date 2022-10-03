@@ -3,7 +3,7 @@ import logo from "./assets/logo.svg"
 
 export default function FirstPage(props){
     return <ThisPage>
-        <img src={logo} />
+        <img src={logo} alt="" />
         <h1>ZapRecall</h1>
         <button data-identifier="start-btn" onClick={()=>props.showPage(false)}>Iniciar Recall!</button>
     </ThisPage>

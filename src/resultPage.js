@@ -48,15 +48,15 @@ export default function ResultPage(props){
         <ThisPage>
             <p>
                 <div>
-                    <img src={lose}></img>
-                    <h1><LoadList value={1} /></h1>
+                    <img src={lose} alt="" ></img>
+                    <h1><LoadList value={1}/></h1>
                 </div>
                 <div>
-                    <img src={soso}></img>
+                    <img src={soso} alt=""></img>
                     <h1><LoadList value={2} /></h1>
                 </div>
                 <div>
-                    <img src={zap}></img>
+                    <img src={zap} alt=""></img>
                     <h1><LoadList value={3} /></h1>
                 </div>
             </p>
