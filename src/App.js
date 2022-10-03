@@ -11,12 +11,16 @@ export default function App() {
   
   function transformArray(){
     for (let i = 0; i < questionsContent.length; i++) {
-      questionsContent[i].opened = false
+      questionsContent[i].state = 0
+      questionsContent[i].actQuest = false
     }
     return questionsContent
   }
 
   const [questlist, setQuestlistState] = useState(transformArray)
+  const [questionCounter, setQuestionCounter] = useState(0)
+  const [answersCount, setAnswersCount] = useState([0,0,0,0,0,0,0,0])
+
 
 
   return (
@@ -24,9 +28,22 @@ export default function App() {
       <ThisApp>
         <GlobalStyle/>
         <Title/>
-        <Questions questList={questlist} thisState={setQuestlistState}/>
+        <Questions 
+        questList={questlist} 
+        thisState={setQuestlistState} 
+        actQuest={questionCounter}
+        setActQuest={setQuestionCounter}
+        answerList={answersCount}
+        />
       </ThisApp>
-      <Answers questList={questionsContent.length}/>
+      <Answers 
+      questList={questlist} 
+      thisState={setQuestlistState} 
+      setAnswersCount={setAnswersCount}
+      actQuest={questionCounter}
+      setActQuest={setQuestionCounter}
+      answerList={answersCount}
+      />
     </>
   );
 }
@@ -34,6 +51,8 @@ export default function App() {
 const GlobalStyle = createGlobalStyle`
   *{
     box-sizing: border-box;
+    user-select: none;
+    -webkit-user-drag: none;
   }
   body {
     height: 100vh;

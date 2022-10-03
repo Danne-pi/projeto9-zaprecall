@@ -1,16 +1,49 @@
 import styled from "styled-components";
 
 
-
 export default function Answers(props) {
+  const idx = props.actQuest
+  const setAnswer = props.setAnswersCount
+  const answerList = props.answerList
+  const questlist = props.questList
+  const thisState = props.thisState
+  const setIdx = props.setActQuest
+
+  function answerHandler(answerType){
+    let newArr = [...answerList]
+    for (let i = 0; i < newArr.length; i++) {
+      if(i === idx){
+        newArr[i] = answerType
+      }            
+    }
+    setAnswer(newArr)
+    addNewState(idx, questlist, thisState, (answerType+2))
+    const newIdx = idx + 1
+    setIdx(newIdx)
+  }
+
+  function addNewState(index, actuaArr, thisState, newState){
+    let newArr = [...actuaArr]
+    
+    for (let i = 0; i < newArr.length; i++) {
+      if(i === index){
+        newArr[i].state = newState
+      }
+      else {
+      }
+    }
+    thisState(newArr)
+  }
+
+  
     return (
       <ThisAnswers>
         <Buttons>
-            <button className="b1">Nao lembrei</button>
-            <button className="b2">Quase nao lembrei</button>
-            <button className="b3">Zap!</button>
+            <button onClick={()=> answerHandler(1)} className={questlist[idx].state === 2 ? 'b1': 'b0'}>Nao lembrei</button>
+            <button onClick={()=> answerHandler(2)} className={questlist[idx].state === 2 ? 'b2': 'b0'}>Quase nao lembrei</button>
+            <button onClick={()=> answerHandler(3)} className={questlist[idx].state === 2 ? 'b3': 'b0'}>Zap!</button>
         </Buttons>
-        <h2>0/{props.questList} CONCLUIDOS</h2>
+        <h2>0/{props.questList.length} CONCLUIDOS</h2>
       </ThisAnswers>
     );
   }
@@ -42,8 +75,14 @@ export default function Answers(props) {
         border-radius: 9px;
         width: 100px;
         height: 50px;
+        cursor: pointer;
+        transition: all 0.3s;
     }
     .b1{background-color: #FF3030;}
     .b2{background-color: #FF922E;}
     .b3{background-color: #2FBE34;}
+    .b0{
+      pointer-events: none;
+      background-color: #BCBCBD;
+      }
   `

@@ -1,39 +1,72 @@
 import styled from "styled-components";
 import play from "./assets/play.svg"
+import reveal from "./assets/reveal.svg"
+import zap from "./assets/zap.svg"
+import soso from "./assets/soso.svg"
+import lose from "./assets/lose.svg"
+
 
 function WriteListOfQuestions(props){
     const qlist = props.questList
     return qlist.map((item, idx)=>(
     <Question 
-    onClick={()=>createNewArray(idx, qlist, props.thisState)}
     key={idx} 
-    open={qlist[idx].opened ? '150px' : '90px'}>
+    height={qlist[idx].state}
+    imgPosition={qlist[idx].state}
+    iconClickable={idx === props.actQuest}
+    questionColor={props.answerList[idx]}
+    >
         <h3>
-          {!qlist[idx].opened ?
-          'Pergunta ' + (idx+1)
-          :
-          qlist[idx].question
+          {qlist[idx].state === 0 ?
+          'Pergunta '+(idx+1)
+          :qlist[idx].state === 1 ?
+            qlist[idx].question 
+            :qlist[idx].state === 2 ?
+              qlist[idx].answer
+              :<s>{'Pergunta '+(idx+1)}</s>
           }
         </h3>
-        <img src={play} alt=""></img>
+        <img 
+        src={
+          qlist[idx].state === 0 ? 
+            play 
+          :qlist[idx].state === 1 ?
+            reveal
+          :qlist[idx].state === 3 ?
+            lose
+          :qlist[idx].state === 4 ?
+            soso
+          : zap
+        } 
+        alt=""
+        onClick={()=> addNewState(props.actQuest, qlist, props.thisState, qlist[idx].state===0?1:2)}
+        ></img>
     </Question>
     ))
 }
-function createNewArray(index, actuaArr, thisState){
+function addNewState(index, actuaArr, thisState, newState){
   let newArr = [...actuaArr]
+  
   for (let i = 0; i < newArr.length; i++) {
     if(i === index){
-      newArr[i].opened = !newArr[i].opened
+      newArr[i].state = newState
+    }
+    else {
     }
   }
   thisState(newArr)
 }
 
-
 export default function Questions(props) {
     return (
       <ThisQuestions>
-        <WriteListOfQuestions questList={props.questList} thisState={props.thisState}/>
+        <WriteListOfQuestions
+        questList={props.questList} 
+        thisState={props.thisState}
+        actQuest={props.actQuest}
+        setActQuest={props.setActQuest}
+        answerList={props.answerList}
+        />
       </ThisQuestions>
     );
   }
@@ -56,7 +89,16 @@ export default function Questions(props) {
     background-color: white;
     width: 100%;
     margin-inline: auto;
-    height: ${props => props.open};
+    height: ${
+      props => {
+        if(props.height === 1 || props.height === 2){
+          return '150px'
+        }
+        else{
+          return '90px'
+        }
+      }
+      };
     display: flex;
     justify-content: start;
     align-items: center;
@@ -66,14 +108,43 @@ export default function Questions(props) {
     transition: all 0.8s;
 
     h3{
-      color: #333333;
+      color: ${props =>
+      {
+        if(props.questionColor === 0){
+          return '#333333'
+        }
+        if(props.questionColor === 1){
+          return '#FF3030'
+        }  
+        if(props.questionColor === 2){
+          return '#FF922E'
+        }  
+        if(props.questionColor === 3){
+          return '#2FBE34'
+        }  
+      }
+      };
       font-family: 'Recursive';
       transition: all 0.8s;
     }
     img{
+      display: ${props => props.imgPosition === 2 ? 'none' : 'unset'};
+      cursor: pointer;
+      pointer-events: ${props => props.iconClickable ? 'all' : 'none'};
+      opacity: ${props => props.iconClickable || props.imgPosition > 2 ? 1 : 0.5};
       position: absolute;
-      top: 50%;
+      bottom: ${
+      props => {
+        if(props.height === 1){
+          return '20%'
+        }
+        else{
+          return '50%'
+        }
+      }
+      };
       right: 24px;
-      transform: translateY(-50%);
+      transform: translateY(50%);
+      transition: all 0.8s ease-in-out;
     }
   `
