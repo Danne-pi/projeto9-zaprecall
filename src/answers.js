@@ -52,11 +52,11 @@ export default function Answers(props) {
         <Buttons
         showThis={idxToShow < questlist.length}
         >
-            <button onClick={()=> answerHandler(1)} className={questlist[idx].state === 2 ? 'b1': 'b0'}>Nao lembrei</button>
-            <button onClick={()=> answerHandler(2)} className={questlist[idx].state === 2 ? 'b2': 'b0'}>Quase nao lembrei</button>
-            <button onClick={()=> answerHandler(3)} className={questlist[idx].state === 2 ? 'b3': 'b0'}>Zap!</button>
+            <button data-identifier="forgot-btn" onClick={()=> answerHandler(1)} className={questlist[idx].state === 2 ? 'b1': 'b0'}>Nao lembrei</button>
+            <button data-identifier="almost-forgot-btn" onClick={()=> answerHandler(2)} className={questlist[idx].state === 2 ? 'b2': 'b0'}>Quase nao lembrei</button>
+            <button data-identifier="zap-btn" onClick={()=> answerHandler(3)} className={questlist[idx].state === 2 ? 'b3': 'b0'}>Zap!</button>
         </Buttons>
-        <h2>{idxToShow}/{questlist.length} CONCLUIDOS</h2>
+        <h2 data-identifier="flashcard-counter">{idxToShow}/{questlist.length} CONCLUIDOS</h2>
         <LastButton
         showThis={idxToShow === questlist.length}
         onClick={()=> setShowResult(true)}

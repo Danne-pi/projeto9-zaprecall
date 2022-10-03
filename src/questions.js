@@ -10,6 +10,7 @@ function WriteListOfQuestions(props){
     const qlist = props.questList
     return qlist.map((item, idx)=>(
     <Question 
+    data-identifier="flashcard"
     key={idx}
     id={idx === 0? 'firstQuest': ''} 
     height={qlist[idx].state}
@@ -17,17 +18,18 @@ function WriteListOfQuestions(props){
     iconClickable={idx === props.actQuest}
     questionColor={props.answerList[idx]}
     >
-        <h3>
+        <h3 data-identifier="flashcard-index-item">
           {qlist[idx].state === 0 ?
           'Pergunta '+(idx+1)
           :qlist[idx].state === 1 ?
-            qlist[idx].question 
+            <p data-identifier="flashcard-question">{qlist[idx].question}</p>
             :qlist[idx].state === 2 ?
-              qlist[idx].answer
+              <p data-identifier="flashcard-answer">{qlist[idx].answer}</p>
               :<s>{'Pergunta '+(idx+1)}</s>
           }
         </h3>
         <img 
+        data-identifier="flashcard-show-btn flashcard-turn-btn flashcard-status"
         src={
           qlist[idx].state === 0 ? 
             play 

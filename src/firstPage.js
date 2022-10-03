@@ -5,7 +5,7 @@ export default function FirstPage(props){
     return <ThisPage>
         <img src={logo} />
         <h1>ZapRecall</h1>
-        <button onClick={()=>props.showPage(false)}>Iniciar Recall!</button>
+        <button data-identifier="start-btn" onClick={()=>props.showPage(false)}>Iniciar Recall!</button>
     </ThisPage>
 }
 
