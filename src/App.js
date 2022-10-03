@@ -4,6 +4,7 @@ import Questions from "./questions";
 import Title from "./title";
 import { useState } from "react";
 import questionsContent from "./assets/questionContent";
+import FirstPage from "./firstPage";
 
 
 
@@ -20,11 +21,13 @@ export default function App() {
   const [questlist, setQuestlistState] = useState(transformArray)
   const [questionCounter, setQuestionCounter] = useState(0)
   const [answersCount, setAnswersCount] = useState([0,0,0,0,0,0,0,0])
+  const [showFirstPage, setShowFirstPage] = useState(true)
 
 
 
   return (
     <>
+      {showFirstPage ? <FirstPage showPage={setShowFirstPage}/> : null}
       <ThisApp>
         <GlobalStyle/>
         <Title/>
